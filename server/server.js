@@ -16,7 +16,7 @@ const server = http.createServer(app) ;
 
 
 app.use(cors({
-    origin: "http://localhost:5173",
+    origin: ["http://localhost:5173" , "https://dev-tools-playground.vercel.app"],
     credentials: true
 }));
 
