@@ -1,0 +1,85 @@
+@import "tailwindcss";
+
+/* Root Theme Variables */
+:root {
+  /* Light Theme */
+  --bg: #f9fafb;
+  --bg-secondary: #ffffff;
+  --card-bg: #ffffff;
+  --hover-bg: #f3f4f6;
+  --sidebar-bg: #f4f2f2;
+  --text: #111827;
+  --text-light: #4b5563;
+
+  --border: #e5e7eb;
+
+  --primary: #6366f1;            /* Indigo-500 */
+  --primary-hover: #4f46e5;      /* Indigo-600 */
+    --tool-header-gradient-start: #223dc5;   /* green-500 */
+  --tool-header-gradient-end: #e773b6;
+}
+
+/* DARK THEME */
+.dark {
+  --bg: #0d0f15;
+  --sidebar-bg: #0d0f15;
+
+  --bg-secondary: #11131a;
+  --card-bg: #161922;
+  --hover-bg: #1d202b;
+
+  --text: #f3f4f6;
+  --text-light: #9ca3af;
+
+  --border: #2a2d39;
+
+  --primary: #6366f1;
+  --primary-hover: #4f46e5;
+   --tool-header-gradient-start: #ffffff; 
+  --tool-header-gradient-end: #e5e7eb;   /* white → gray-200 for softer */
+}
+
+/* Smooth theme transition */
+* {
+  transition: background-color 0.25s ease, color 0.25s ease, border-color 0.25s ease;
+}
+
+@keyframes slideDown {
+  0% { opacity: 0; transform: translateY(-10px); }
+  100% { opacity: 1; transform: translateY(0); }
+}
+
+.animate-slideDown {
+  animation: slideDown 0.25s ease-out forwards;
+}
+
+/* ===== Custom Scrollbar (Light + Dark Mode) ===== */
+
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background: var(--bg-secondary);
+  border-radius: 10px;
+}
+
+/* Thumb */
+::-webkit-scrollbar-thumb {
+  background: var(--text-light);
+  border-radius: 10px;
+  border: 2px solid var(--bg-secondary); /* gives padding effect */
+}
+
+/* Thumb Hover */
+::-webkit-scrollbar-thumb:hover {
+  background: var(--text);
+}
+
+/* Firefox Scrollbar */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: var(--text-light) var(--bg-secondary);
+}
