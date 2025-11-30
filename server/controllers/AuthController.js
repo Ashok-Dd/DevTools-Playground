@@ -18,12 +18,13 @@ export const Register = async (req , res) => {
             username , email , password : hashedPassword
         })
         const token = jwt.sign({user : user} , process.env.JWT_SECRET  , {expiresIn : '24h'})
-        res.cookie("authToken" , token , {
-            httpOnly : true ,
-            sameSite : 'none' ,
-            maxAge : 24 * 60 * 60 * 1000 ,
-            secure : process.env.NODE_ENV === 'production'
+        res.cookie('authToken', token, {
+            sameSite: process.env.NODE_ENV === "production" ? "none" : "lax",
+            httpOnly: true,
+            maxAge: 24 * 60 * 60 * 1000, // 1 day
+            secure: process.env.NODE_ENV === "production",
         })
+
 
         return res.status(200).json({
             success : true ,
@@ -55,12 +56,13 @@ export const Login = async( req , res ) => {
             return res.status(400).json({message : "Password Incorrect..."})
         } 
         const token = jwt.sign({user : user} , process.env.JWT_SECRET  , {expiresIn : '24h'})
-        res.cookie('authToken' , token , {
-            sameSite: 'none',
-            httpOnly: true ,
-            maxAge : 24 * 60 * 60 * 1000 ,
-            secure : process.env.NODE_ENV === "production"
+        res.cookie('authToken', token, {
+            sameSite: process.env.NODE_ENV === "production" ? "none" : "lax",
+            httpOnly: true,
+            maxAge: 24 * 60 * 60 * 1000, // 1 day
+            secure: process.env.NODE_ENV === "production",
         })
+
         return res.status(200).json({
             message : "Login Sucessfull ..." ,
             success : true ,
@@ -97,12 +99,12 @@ export const GoogleLogin = async (req, res) => {
 
         const token = jwt.sign({ user } , process.env.JWT_SECRET , { expiresIn: "24h" });
 
-        res.cookie("authToken", token, {
-        httpOnly: true,                    
-        secure: process.env.NODE_ENV === "production" ? true : false,
-        sameSite: 'none',
-        maxAge: 24 * 60 * 60 * 1000
-        });
+        res.cookie('authToken', token, {
+            sameSite: process.env.NODE_ENV === "production" ? "none" : "lax",
+            httpOnly: true,
+            maxAge: 24 * 60 * 60 * 1000, // 1 day
+            secure: process.env.NODE_ENV === "production",
+        })
 
         return res.status(200).json({
         message: "Login Successful",
