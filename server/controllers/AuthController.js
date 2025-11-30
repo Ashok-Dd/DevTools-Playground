@@ -20,7 +20,7 @@ export const Register = async (req , res) => {
         const token = jwt.sign({user : user} , process.env.JWT_SECRET  , {expiresIn : '24h'})
         res.cookie("authToken" , token , {
             httpOnly : true ,
-            sameSite : 'strict' ,
+            sameSite : 'none' ,
             maxAge : 24 * 60 * 60 * 1000 ,
             secure : process.env.NODE_ENV === 'production'
         })
@@ -56,7 +56,7 @@ export const Login = async( req , res ) => {
         } 
         const token = jwt.sign({user : user} , process.env.JWT_SECRET  , {expiresIn : '24h'})
         res.cookie('authToken' , token , {
-            sameSite: 'strict',
+            sameSite: 'none',
             httpOnly: true ,
             maxAge : 24 * 60 * 60 * 1000 ,
             secure : process.env.NODE_ENV === "production"
@@ -100,7 +100,7 @@ export const GoogleLogin = async (req, res) => {
         res.cookie("authToken", token, {
         httpOnly: true,                    
         secure: process.env.NODE_ENV === "production" ? true : false,
-        sameSite: 'strict',
+        sameSite: 'none',
         maxAge: 24 * 60 * 60 * 1000
         });
 
@@ -135,7 +135,7 @@ export const Logout = async(req , res) =>
 {
     res.clearCookie("authToken" , {
         httpOnly: true ,
-        sameSite:"strict",
+        sameSite:"none",
         secure : process.env.NODE_ENV === "production" ,
     })  
     return res.status(200).json({
