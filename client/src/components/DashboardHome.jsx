@@ -82,8 +82,11 @@ export default function DashboardHome() {
     <div className="w-full min-h-screen p-6 bg-[var(--bg)] text-[var(--text)]">
       {/* ---------------- TOP BAR ---------------- */}
       <div className="flex items-center justify-center md:justify-between mb-8 flex-wrap gap-4">
-        <h1 className="text-3xl font-bold bg-gradient-to-r from-blue-500 to-purple-600 bg-clip-text text-transparent">
+        <h1 className="hidden md:block md:text-3xl font-bold bg-gradient-to-r from-blue-500 to-purple-600 bg-clip-text text-transparent">
           Dashboard
+        </h1>
+        <h1 className="  md:hidden text-3xl font-bold bg-gradient-to-r from-blue-500 to-purple-600 bg-clip-text text-transparent">
+          Welcome {userInfo?.username}
         </h1>
 
         <div className="flex items-center gap-6 hidden md:flex flex-wrap">
