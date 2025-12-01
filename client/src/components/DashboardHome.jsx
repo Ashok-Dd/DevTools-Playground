@@ -86,7 +86,7 @@ export default function DashboardHome() {
           Dashboard
         </h1>
         <h1 className="  md:hidden text-3xl font-bold bg-gradient-to-r from-blue-500 to-purple-600 bg-clip-text text-transparent">
-          Welcome {userInfo?.username}
+          Welcome, {userInfo?.username} !
         </h1>
 
         <div className="flex items-center gap-6 hidden md:flex flex-wrap">
