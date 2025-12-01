@@ -124,15 +124,15 @@ export default function DashboardHome() {
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
         <div className="p-4 rounded-2xl bg-[var(--card-bg)] border border-[var(--border)] shadow-md">
           <p className="text-[var(--text-light)] font-semibold">Total History Entries</p>
-          <p className="text-2xl font-bold">{stats.totalHistory}</p>
+          <p className="text-lg sm:text-2xl font-bold">{stats.totalHistory}</p>
         </div>
         <div className="p-4 rounded-2xl bg-[var(--card-bg)] border border-[var(--border)] shadow-md">
           <p className="text-[var(--text-light)] font-semibold">Most Used Tool</p>
-          <p className="text-2xl font-bold">{stats.mostUsedTool}</p>
+          <p className="text-lg sm:text-2xl font-bold">{stats.mostUsedTool}</p>
         </div>
         <div className="p-4 rounded-2xl bg-[var(--card-bg)] border border-[var(--border)] shadow-md">
           <p className="text-[var(--text-light)] font-semibold">Last Used Tool</p>
-          <p className="text-2xl font-bold">{stats.lastUsedTool}</p>
+          <p className="text-lg sm:text-2xl font-bold">{stats.lastUsedTool}</p>
         </div>
       </div>
 

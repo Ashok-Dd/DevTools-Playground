@@ -6,31 +6,25 @@ import { useNavigate } from "react-router-dom";
 import { useStore } from "../store";
 
 const GoogleSignInButton = () => {
-  const [details, setDetails] = useState(null);
-  const {userInfo , setUserInfo} = useStore() ;
+  const [loading, setLoading] = useState(false);
+  const { userInfo, setUserInfo } = useStore();
   const navigate = useNavigate();
 
-  // Google Login Success
   const handleSuccess = async (response) => {
     const { access_token } = response;
+    setLoading(true);
 
     try {
-      // Fetch user info from Google
-      const res = await fetch(
-        "https://www.googleapis.com/oauth2/v3/userinfo",
-        {
-          headers: { Authorization: `Bearer ${access_token}` },
-        }
-      );
+      const res = await fetch("https://www.googleapis.com/oauth2/v3/userinfo", {
+        headers: { Authorization: `Bearer ${access_token}` },
+      });
 
       const data = await res.json();
 
-      setDetails(data);
-
-      // Now send user details to backend
       await handleGoogleLogin(data);
     } catch (error) {
-      console.log("Error fetching Google user:", error);
+      console.error("Error fetching Google user:", error);
+      setLoading(false);
     }
   };
 
@@ -38,18 +32,23 @@ const GoogleSignInButton = () => {
     try {
       const { given_name, email, sub } = googleUser;
 
-      const response = await axios.post(Api + "/auth/google-login", { given_name, email, sub }, { withCredentials: true });
+      const response = await axios.post(
+        Api + "/auth/google-login",
+        { given_name, email, sub },
+        { withCredentials: true }
+      );
 
       if (response.data.success) {
         setUserInfo(response.data.user);
         navigate("/dashboard");
       }
     } catch (error) {
-      console.log("Error logging in:", error);
+      console.error("Error logging in:", error);
+    } finally {
+      setLoading(false);
     }
   };
 
-  // Google login trigger
   const login = useGoogleLogin({
     onSuccess: handleSuccess,
     onError: (err) => console.log("Google Login Failed", err),
@@ -58,15 +57,26 @@ const GoogleSignInButton = () => {
 
   return (
     <button
-      onClick={() => login()}
-      className="w-full flex items-center justify-center gap-3 py-3 rounded-xl bg-[var(--bg-secondary)] border border-[var(--border)] hover:bg-[var(--hover-bg)] transition-all font-medium"
+      onClick={() => !loading && login()}
+      disabled={loading}
+      className={`w-full flex items-center justify-center gap-3 py-3 rounded-xl border transition-all font-medium
+        bg-[var(--bg-secondary)] border-[var(--border)] hover:bg-[var(--hover-bg)]
+        ${loading ? "opacity-70 cursor-not-allowed" : ""}
+      `}
     >
-      <img
-        src="https://www.svgrepo.com/show/475656/google-color.svg"
-        alt="Google"
-        className="w-5 h-5"
-      />
-      Continue with Google
+      {loading ? (
+        // 🔄 Spinner
+        <div className="w-5 h-5 border-2 border-gray-300 border-t-transparent rounded-full animate-spin"></div>
+      ) : (
+        <>
+          <img
+            src="https://www.svgrepo.com/show/475656/google-color.svg"
+            alt="Google"
+            className="w-5 h-5"
+          />
+          Continue with Google
+        </>
+      )}
     </button>
   );
 };
