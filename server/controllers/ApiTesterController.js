@@ -16,10 +16,16 @@ export const proxyRequest = async (req, res) => {
     const axiosConfig = {
       method,
       url,
-      headers: headers || {},
-      validateStatus: () => true, // Accept all status codes
-      transformResponse: [(data) => data], // Keep raw response
+      headers: {
+        "User-Agent":
+          headers?.["User-Agent"] ||
+          "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 Chrome/120 Safari/537.36",
+        ...headers,
+      },
+      validateStatus: () => true,
+      transformResponse: [(data) => data],
     };
+
 
     // Only add data for non-GET requests
     if (method !== "GET" && body) {
